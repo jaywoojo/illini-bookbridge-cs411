@@ -24,7 +24,7 @@
 | Video Link  |      link_to_video     |
 
 ## Project Summary
-Illini BookBridge allows students at the University of Illinois to discover their favorite books from a database of books. This application allows users to filter through a database (e.g., by genre, author, rating, publisher) and to retrieve relevant book information.
+Illini BookBridge is an application that allows students at the University of Illinois to not only get information about their favorite books, but to also connect with other students who share the same book interests. 
 
-Additionally, Illini BookBridge has a social component which allows students to connect others who have the same tastes in books as them. The user can then retrieve a list of contact information of students who share the same interests in a specific genre/author of books, they can get connected and form their own book communities, without having to post on social media.
+This application allows users to search for a book and retrieve all kinds of book information such as genre, author, publisher, awards, etc. The social component allows students to connect with others who have the same tastes in books as them. If a user wishes to connect with another user, the student will be provided with the other person’s contact information so they can get connected and possibly form a book community.
 
