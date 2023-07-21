@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Search Result</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Lumanosimo&display=swap" rel="stylesheet">
+
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body>
+    <%- include('navbar') %>
+
+    
+    <div class="row" style="margin-top: 50px; margin-left: 200px; margin-right: 200px;">
+        <div class="col-4" >
+            <img src="<%= data.bookResults.coverImg %>" style="width:80%;" alt="Book Cover">
+            <!-- <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722975l/2767052.jpg" style="width:250px;" alt="Book Cover"> -->
+        </div>
+        <div class="col-8"> 
+            <div style="display: inline-block;">
+                <h2 style="font-size: 35px; margin-bottom: 4px"> <%= data.bookResults.title %> </h2>
+                <p style="font-size: 20px;"> <%= data.bookResults.authorName %> </p>
+            </div>
+            <div style="display: inline-block;">
+                <button style="margin-bottom: 70px; margin-left: 80px;" id="favorite-button" type="button" class="btn btn-success btn-lg"> Favorite </button>
+            </div>
+
+            <!-- JS script to send data as POST request -->
+            <script>
+                const favoriteBtn = document.getElementById('favorite-button');
+            
+                favoriteBtn.addEventListener('click', () => {
+                  // Get the title and authorName values from the HTML elements
+                  const bookId = '<%= data.bookResults.bookId %>';
+            
+                  // Send a POST request with the data
+                  fetch('/favorite-button', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ bookId })
+                  })
+                  .then(response => response.text())
+                  .then(responseData => {
+                    console.log(responseData); // Handle the server response here if needed
+                  })
+                  .catch(error => console.error('Error:', error));
+                });
+              </script>
+            
+
+            <p style="font-size: 15px; font-weight: 250; margin-right: 5px; margin-bottom: 4px;"> Rating: </p>
+            <p style="font-size: 20px; font-weight: 400; display: inline;"> INSERT-LATER/5 </p>
+            <p style="font-size: 15px; font-weight: 400; display: inline; margin-left: 20px; "> INSERT-LATER ratings </p>
+            
+            <p style="margin-top: 50px; font-size: 15px; font-weight: 250; margin-right: 5px; margin-bottom: 4px;"> Description: </p>
+            <p style="font-size: 15px;"> <%= data.bookResults.description %> </p>
+
+            <div style="margin-bottom: 16px;">
+                <p style="font-size: 15px; font-weight: 250; display: inline; margin-right: 5px;"> Genres: </p>
+                <% for (let i = 0; i < data.genreResult.length; i++) { %>
+                    <span style="font-size: 15px; margin-right: 10px;"> <%= data.genreResult[i].genreName %></span>
+                <% } %>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Series: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.series %> </span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Settings: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.setting %> </span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Characters: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.characters %></span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> bookId: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.bookId %></span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Language: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.language %></span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> ISBN: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.isbn %></span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> price: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.price %></span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> bbeScore: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.bbeScore %></span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> bbeVotes: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.bbeVotes %></span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 16px;">
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Publisher: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.publisher %> </span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> Publish Date: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.publishDate %> </span>
+                </div>
+                <div>
+                    <span style="font-size: 15px; font-weight: 250; margin-right: 5px;"> First Publish Date: </span>
+                    <span style="font-size: 15px; font-weight: 400; margin-right: 10px;"> <%= data.bookResults.firstPublicationDate %> </span>
+                </div>
+            </div>
+     
+            <div>
+                <p style="font-size: 15px; font-weight: 250; margin-right: 5px; margin-bottom: 4px;"> Awards: </p>
+                <% for (let i = 0; i < data.awardResult.length; i++) { %>
+                    <li style="font-size: 15px;"> <%= data.awardResult[i].awardName %></li>
+                <% } %>
+            </div>
+            
+        </div>
+    </div>      
+        
+</body>
+
+</html>
+
