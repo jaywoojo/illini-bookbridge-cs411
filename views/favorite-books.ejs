@@ -19,7 +19,7 @@
 
 
     <div class="container">
-        <h2 class="mt-4">My Favorite Shelf</h2>
+        <h2 class="mt-4">My Likes Shelf</h2>
         <table class="table table-striped">
             <thead>
               <tr>
@@ -33,7 +33,7 @@
                 <tr>
                         <td> <%= data.likes[i].email%></td>
                         <td> <%= data.likes[i].bookID%></td>
-                        <td> <button class="delete-btn btn btn-danger" data-bookid="<%= data.likes[i].bookID %>"> Unfavorite </button> </td>
+                        <td> <button class="delete-btn btn btn-danger" data-bookid="<%= data.likes[i].bookID %>"> Unlike </button> </td>
                 </tr>
                 <% } %>
             </tbody>
