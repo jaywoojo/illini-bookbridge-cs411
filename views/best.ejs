@@ -1,0 +1,67 @@
+<!-- best.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Best Books and Authors</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="container">
+            <h2 class="mt-4">Top Books</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Rating</th>
+                        <th>Number of Awards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% topBooks.forEach(book=> { %>
+                        <tr>
+                            <td>
+                                <%= book.title %>
+                            </td>
+                            <td>
+                                <%= book.rating %>
+                            </td>
+                            <td>
+                                <%= book.numAwards %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+
+            <h2 class="mt-4">Top Authors</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Author Name</th>
+                        <th>Number of Awards</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% topAuthors.forEach(author=> { %>
+                        <tr>
+                            <td>
+                                <%= author.authorName %>
+                            </td>
+                            <td>
+                                <%= author.numAwards %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>

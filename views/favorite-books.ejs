@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <title>Welcome to Bookbridge</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Lumanosimo&display=swap" rel="stylesheet">
+
+    <!-- <link href="css/styles.css" rel="stylesheet" /> -->
+</head>
+
+<body>
+    <%- include('navbar') %>
+
+
+    <div class="container">
+        <h2 class="mt-4">My Favorite Shelf</h2>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                  <th> Email </th>
+                  <th> bookID </th>
+              </tr>
+            </thead>
+            <tbody>
+        
+                <% for (let i = 0; i < data.likes.length; i++) { %>
+                <tr>
+                        <td> <%= data.likes[i].email%></td>
+                        <td> <%= data.likes[i].bookID%></td>
+                        <td> <button class="delete-btn btn btn-danger" data-bookid="<%= data.likes[i].bookID %>"> Unfavorite </button> </td>
+                </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JS Script for Unfavorite-->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const deleteButtons = document.querySelectorAll(".delete-btn");
+        
+          deleteButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              const bookID = button.dataset.bookid; //gets the info tied to "data-bookID" attribute
+                
+              console.log("ID of Button pressed: " + bookID);
+              console.log("class of Button pressed: " + bookID);
+              // Send a request to your server to delete the tuple with the corresponding BookID
+              fetch(`/deleteBook/${bookID}`, {
+                method: "DELETE",
+              })
+              .then((response) => {
+                if (response.ok) {
+                  // If the deletion is successful, remove the row from the table
+                  const row = button.closest("tr");
+                  row.remove();
+                } else {
+                  console.error("Failed to delete the book.");
+                }
+              })
+              .catch((error) => {
+                console.error("Error occurred while deleting the book:", error);
+              });
+            });
+          });
+        });
+      </script>
+      
+
+    
+
+    
+
+</body>
+
+</html>
+

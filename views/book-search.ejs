@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Lumanosimo&display=swap" rel="stylesheet">
+
+    <link href="css/styles.css" rel="stylesheet" />
+    <title> Book Search </title>
+</head>
+
+<body> <!-- style="background-color: #FAF9F6; " -->
+    <%- include('navbar') %>
+
+        <div style="margin-right: 500px;margin-left: 500px; margin-top: 100px;">
+            <h2 style="font-size: 35px; margin-bottom: 4px"> Search for a book here! </h2>
+            <p style="font-size: 18px;"> Type in the book title and author for a book to get information about a book you love.  </p>
+            <p style="font-size: 18px;"> Make sure to choose a book from this <a href="https://www.goodreads.com/list/show/1.Best_Books_Ever">list</a>.  </p>
+        </div>
+        <div style="margin-right: 500px;margin-left: 500px; margin-top: 50px;">
+            <form action="/book-search-form" method="POST">
+                <div class="mb-3">
+                    <label class="form-label"> Book Title</label>
+                    <input class="form-control" name="book_title"> 
+                </div>
+                <div class="mb-3">
+                    <label class="form-label"> Author </label>
+                    <input class="form-control" name="book_author"> 
+                </div>
+                <button type="submit" class="btn btn-primary">Search </button>
+            </form>
+        </div>
+    
+</body>
+
+</html>
+
