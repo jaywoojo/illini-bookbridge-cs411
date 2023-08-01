@@ -21,10 +21,26 @@
                 <a class="nav-link" href="/best">Best Books/Authors</a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-        </ul>
+
+        <% if (user) { %>  <!-- Show this when user is logged in -->
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/profile2">Profile</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/logout">Log Out</a>
+              </li>
+            </ul>
+        <% } else { %>  <!-- Show this when user is NOT logged in -->
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/login">Log In</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/signup">Sign Up</a>
+              </li>
+            </ul>
+          <% } %>
+
     </div>
 </nav>

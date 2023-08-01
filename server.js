@@ -1,8 +1,12 @@
 ////////////////////////
 /** APP CONFIGURATION */
 ////////////////////////
-require('dotenv').config()
+/** LOG IN STUFF */
+const session = require('express-session');
+const flash = require('express-flash');
+const bcrypt = require('bcrypt');
 
+require('dotenv').config()
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -13,9 +17,27 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/** LOG IN STUFF */
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({
+  secret: 'your_secret_key',
+  resave: false,
+  saveUninitialized: true,
+}));
+app.use(flash());
+
+// Custom middleware to make 'user' available in all EJS templates
+app.use((req, res, next) => {
+    // Make the 'user' variable available to all EJS templates
+    res.locals.user = req.session.user || null; // Set 'user' to null if not authenticated
+  
+    next();
+});
+  
+
+
 //var mysql = require('mysql2');
 //var path = require('path');
-
 //parses req and res variables
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,6 +55,179 @@ connection.connect;
 
 /** GLOBAL VARIABLE FOR NOW */
 const userEmail = 'jrjo2@illinois.edu';
+
+////////////////////
+/** Signup/Login Stuff */
+////////////////////
+
+app.get('/test', (req,res) => {
+    console.log(req.session.user);
+});
+
+app.get('/logout', (req, res) => {
+    // logout = destroy the curren user session 
+    req.session.destroy(err => {
+      if (err) throw err;
+      res.redirect('/login');
+    });
+});
+
+app.get('/signup', (req, res) => {
+    res.render('signup', { messages: req.flash('error') });
+  });
+
+app.get('/login', (req, res) => {
+    res.render('login', { messages: req.flash('error') });
+});
+
+app.get('/profile2', (req, res) => {
+    var user = req.session.user; //hm.....
+
+    //Test if user is logged in. If not, redirect back to log in.
+    if (!user) {
+      req.flash('error', 'You need to log in first.');
+      return res.redirect('/login');
+    }
+
+    res.render('profile2');
+});   
+
+app.post('/signup', (req, res) => {
+    const { email, password } = req.body;
+  
+    //password hashing
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+        if (err) throw err;
+
+        const newUser = {
+            illiniEmail: email,
+            password: hashedPassword,
+        };
+
+        try {
+            connection.query('INSERT INTO User SET ?', newUser, (err, result) => {
+                if (err && err.code === 'ER_SIGNAL_EXCEPTION') {
+                    const triggerErrorMessage = err.message;
+                    //catching trigger error for email not ending in @illinos.edu
+                    if (triggerErrorMessage.includes('Email does not end in @illinois.edu')) {
+                        req.flash('error', 'Email does not end in @illinois.edu');
+                    //catching trigger error for user already exists
+                    } else if (triggerErrorMessage.includes('User with this email already exists')) {
+                        req.flash('error', 'User with this email already exists');
+                    } //else { req.flash('error', 'Failed to sign up.'); }
+                    return res.redirect('/signup');
+                }
+
+                //if (err) throw err;
+                
+                req.session.user = newUser;
+                req.flash('success', 'Sign up success!');
+                res.redirect('/profile2');
+            });
+            } catch (err) {
+            // sql database errors
+                console.error('SQL Insert Error:', err);
+                //req.flash('error', 'Failed to sign up. Please try again.');
+                res.redirect('/signup');
+            }
+
+    });
+});
+
+app.post('/login', (req, res) => {
+    //const user = req.session.user;
+    const { email, password } = req.body;
+  
+    connection.query('SELECT * FROM User WHERE illiniEmail = ?', [email], (err, results) => {
+      if (err) throw err;
+  
+      if (results.length === 0) {
+        req.flash('error', 'User not found. Please sign up first.');
+        return res.redirect('/signup');
+      }
+  
+      const user = results[0];
+
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if (err) throw err;
+  
+        if (!isMatch) {
+          req.flash('error', 'Incorrect password. Please try again.');
+          return res.redirect('/login');
+        }
+  
+        // Set user session if successful login
+        req.session.user = user;
+        req.flash('success', 'Login success! Edit your profile here.');
+        res.redirect('/profile2');
+      });
+    });
+});
+
+app.post('/profile2', (req, res) => {
+    //const userEmail = 'aakasterld@illinois.edu';
+    const user = req.session.user;
+
+    const { firstName, lastName, gender, introduction } = req.body;
+
+    // Perform the SQL query to update the user information in the database
+
+    connection.query(
+        'UPDATE User SET firstName=?, lastName=?, gender=?, introduction=? WHERE illiniEmail=?',
+        [firstName, lastName, gender, introduction, user.illiniEmail],
+        (error, results) => {
+            if (error) {
+                console.error('Error updating user information:', error);
+                // Handle the error appropriately, e.g., show an error page or redirect
+                return;
+            }
+            // Redirect the user back to the profile page after the update
+            console.log("updated user info");
+            res.render('/profile2');
+        }
+    );
+});
+
+
+//PROFILE
+/** 
+app.get('/profile', (req, res) => {
+    //const userEmail = 'aakasterld@illinois.edu';
+    const editing = req.query.edit === 'true';
+
+    connection.query('SELECT illiniEmail, firstName, lastName, gender, introduction FROM User WHERE illiniEmail = ?', [userEmail], (error, results) => {
+        if (error) {
+            console.error('Error retrieving user information:', error);
+            // Handle the error appropriately, e.g., show an error page or redirect
+            return;
+        }
+
+        const user = results[0]; // Assuming you expect a single user as the result
+        res.render('profile', { user, editing });
+    });
+}); 
+
+app.post('/profile', (req, res) => {
+    //const userEmail = 'aakasterld@illinois.edu';
+    const { firstName, lastName, gender, introduction } = req.body;
+
+    // Perform the SQL query to update the user information in the database
+    connection.query(
+        'UPDATE User SET firstName=?, lastName=?, gender=?, introduction=? WHERE illiniEmail=?',
+        [firstName, lastName, gender, introduction, userEmail],
+        (error, results) => {
+            if (error) {
+                console.error('Error updating user information:', error);
+                // Handle the error appropriately, e.g., show an error page or redirect
+                return;
+            }
+            // Redirect the user back to the profile page after the update
+            res.redirect('/profile');
+        }
+    );
+});
+
+*/
 
 ///////////////////
 /** GET Requests */
@@ -69,6 +264,20 @@ app.get('/favorite-books', (req, res) => {
     });
 
     //res.render("favorite-books");
+});
+
+app.get('/ruhana', (req,res) => {
+    const yourParameter = 'aakasterld@illinois.edu'; // Replace with the actual parameter value
+
+    connection.query(
+    'CALL UserMatching(?)',
+    [yourParameter],
+    (err, results) => {
+        if (err) throw err;
+        console.log('Results of the stored procedure:', results);
+
+        res.json(results);
+    });
 });
 
 //profile
@@ -216,6 +425,25 @@ app.post('/profile', (req, res) => {
     );
 });
 
+/** 
+
+app.use(bodyParser.json());
+app.use(
+  session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// Include routes
+const routes = require('./routes');
+app.use('/', routes);
+*/
+
+
+
+
 
 ///////////
 /** Port */
@@ -228,7 +456,6 @@ const port = process.env.PORT || 8080;
 app.listen(port, () => {
     console.log(`App is running at: http://localhost:${port}`);
 });
-
 
 
 
