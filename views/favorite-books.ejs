@@ -23,7 +23,7 @@
         <table class="table table-striped">
             <thead>
               <tr>
-                  <th> Email </th>
+                  <th> My Email </th>
                   <th> bookID </th>
               </tr>
             </thead>
@@ -33,14 +33,14 @@
                 <tr>
                         <td> <%= data.likes[i].email%></td>
                         <td> <%= data.likes[i].bookID%></td>
-                        <td> <button class="delete-btn btn btn-danger" data-bookid="<%= data.likes[i].bookID %>"> Unlike </button> </td>
+                        <td> <button class="delete-btn btn btn-danger btn-sm" data-bookid="<%= data.likes[i].bookID %>"> Unlike </button> </td>
                 </tr>
                 <% } %>
             </tbody>
         </table>
     </div>
 
-    <!-- JS Script for Unfavorite-->
+    <!-- js script for unlike -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
           const deleteButtons = document.querySelectorAll(".delete-btn");
@@ -51,13 +51,13 @@
                 
               console.log("ID of Button pressed: " + bookID);
               console.log("class of Button pressed: " + bookID);
-              // Send a request to your server to delete the tuple with the corresponding BookID
+              //send a request to your server to delete the tuple with the corresponding BookID
               fetch(`/deleteBook/${bookID}`, {
                 method: "DELETE",
               })
               .then((response) => {
                 if (response.ok) {
-                  // If the deletion is successful, remove the row from the table
+                  //if the deletion is successful, remove the row from the table
                   const row = button.closest("tr");
                   row.remove();
                 } else {

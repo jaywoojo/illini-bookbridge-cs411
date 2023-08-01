@@ -8,23 +8,60 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/book-search">Book Search</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="/favorite-books">My Likes</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item ">
+                <a class="nav-link" href="/connections"> Connections</a>
+            </li>
+            <li class="nav-item ">
                 <a class="nav-link" href="/best">Best Books/Authors</a>
             </li>
         </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="/profile">Profile</a>
-            </li>
-        </ul>
+
+        <% if (user) { %>  <!-- Show this when user is logged in -->
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="/profile2">My Profile</a>
+              </li>
+            </ul>
+        <% } else { %>  <!-- Show this when user is NOT logged in -->
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="/login">Log In</a>
+              </li>
+              <li class="nav-item ">
+                <a class="nav-link" href="/signup">Sign Up</a>
+              </li>
+            </ul>
+          <% } %>
+
     </div>
 </nav>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Get the current URL path
+    var currentPath = window.location.pathname;
+
+    // Remove all active classes from the navbar links
+    $(".navbar-nav .nav-item").removeClass("active");
+
+    // Loop through the navbar links to find the one that matches the current page
+    $(".navbar-nav .nav-item").each(function() {
+      var linkPath = $(this).find(".nav-link").attr("href");
+
+      // Check if the link's href matches the current URL path
+      if (linkPath === currentPath) {
+        $(this).addClass("active");
+      }
+    });
+  });
+</script>
