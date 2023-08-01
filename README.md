@@ -10,12 +10,12 @@ To run server, (1) add a .env file with our GCP DB_HOST, DB_NAME, DB_USER, and D
 Our server currently is running locally because it is easier to work on due to GCP VM SSH lagging issues. For Stage 5 it will be hosted on GCP.
 
 ### Stages Info
-Stages:
-For Stage 0, created README and filled out information on the TeamInfo document.
-For Stage 1, created Project Description.
-For Stage 2, created Conceptual and Logical Database Design
-For Stage 3, created Database Design.
-For Stage 4, created interface for CRUD for Midterm Demo. AND updated Stage 2 to gain back missed points by adding a weak entity for Statistics table.
-For Stage 5, incorperated stored procedure, trigger, and finished completing the application.
+Stages: <br>
+For Stage 0, created README and filled out information on the TeamInfo document. <br>
+For Stage 1, created Project Description. <br>
+For Stage 2, created Conceptual and Logical Database Design <br>
+For Stage 3, created Database Design. <br>
+For Stage 4, created interface for CRUD for Midterm Demo. AND updated Stage 2 to gain back missed points by adding a weak entity for Statistics table. <br>
+For Stage 5, incorperated stored procedure, trigger, and finished completing the application. <br>
 For Stage 6, added project reflection report and demo video.
 
