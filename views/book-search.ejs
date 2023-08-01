@@ -17,7 +17,7 @@
 <body> <!-- style="background-color: #FAF9F6; " -->
     <%- include('navbar') %>
 
-        <div style="margin-right: 500px;margin-left: 500px; margin-top: 100px;">
+        <!-- <div style="margin-right: 500px;margin-left: 500px; margin-top: 100px;">
             <h2 style="font-size: 35px; margin-bottom: 4px"> Search for a book here! </h2>
             <p style="font-size: 18px;"> Type in the book title and author for a book to get information about a book you love.  </p>
             <p style="font-size: 18px;"> Make sure to choose a book from this <a href="https://www.goodreads.com/list/show/1.Best_Books_Ever">list</a>.  </p>
@@ -34,6 +34,32 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Search </button>
             </form>
+        </div> -->
+
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h2 style="font-size: 35px; margin-bottom: 40px"> Search for a book here! </h2>
+                    <p style="font-size: 18px;"> Type in the book title and author for a book to get information about a book you love.  </p>
+                    <p style="font-size: 18px;"> Make sure to choose a book from this <a href="https://www.goodreads.com/list/show/1.Best_Books_Ever">list</a>.  </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form action="/book-search-form" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label"> Book Title</label>
+                            <input class="form-control" name="book_title">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> Author </label>
+                            <input class="form-control" name="book_author">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
         </div>
     
 </body>

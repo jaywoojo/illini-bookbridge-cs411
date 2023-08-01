@@ -5,23 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <title> Profile </title>
+    <title>Profile</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto; /* center form horizontally */
+        }
+    </style>
 </head>
 
 <body>
     <%- include('navbar') %>
 
     <div class="container mt-5">
-        <h1>Welcome to Your Profile</h1>
-        <% if (user) { %>
-          <p>Name: <%= user.firstName %> <%= user.lastName %></p>
-          <p>Email: <%= user.illiniEmail %></p>
-          <p>Gender: <%= user.gender %> </p>
-          <a href="/logout" class="btn btn-primary">Logout</a>
-        <% } %>
+        <div class="card form-container"> 
+            <div class="card-header">
+                <h2 class="card-title text-center">Welcome to Your Profile</h2>
+            </div>
+            <div class="card-body">
+                <% if (user) { %>
+                    <% if (messages.success) { %>
+                        <div class="alert alert-success" role="alert">
+                            <%= messages.success %>
+                        </div>
+                    <% } %>
+                    <form action="/updateProfile" method="POST">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="<%= user.illiniEmail %>" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName"
+                                value="<%= user.firstName %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName"
+                                value="<%= user.lastName %>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="Male" <% if (user.gender === 'Male') { %> selected <% } %>>Male</option>
+                                <option value="Female" <% if (user.gender === 'Female') { %> selected <% } %>>Female</option>
+                                <option value="Non-binary" <% if (user.gender === 'Non-binary') { %> selected <% } %>>Non-Binary</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="introduction">Introduction</label>
+                            <textarea class="form-control" id="introduction" name="introduction"
+                                required><%= user.introduction %></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <a href="/logout" class="btn btn-danger">Logout</a>
+                    </form>
+                <% } %>
+            </div>
+        </div>
     </div>
 
-
-
 </body>
+
 </html>

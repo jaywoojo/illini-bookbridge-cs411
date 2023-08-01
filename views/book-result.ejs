@@ -17,6 +17,11 @@
 <body>
     <%- include('navbar') %>
 
+        <% if (messages.success) { %>
+        <div class="alert alert-success" role="alert">
+            <%= messages.success %>
+        </div>
+        <% } %>
     
     <div class="row" style="margin-top: 50px; margin-left: 200px; margin-right: 200px;">
         <div class="col-4" >
@@ -24,15 +29,19 @@
             <!-- <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722975l/2767052.jpg" style="width:250px;" alt="Book Cover"> -->
         </div>
         <div class="col-8"> 
-            <div style="display: inline-block;">
-                <h2 style="font-size: 35px; margin-bottom: 4px"> <%= data.bookResults.title %> </h2>
-                <p style="font-size: 20px;"> <%= data.bookResults.authorName %> </p>
-            </div>
-            <div style="display: inline-block;">
-                <button style="margin-bottom: 70px; margin-left: 80px;" id="favorite-button" type="button" class="btn btn-success btn-lg"> Like </button>
+
+            <div class="d-flex align-items-center">
+                <div style="display: inline-block;">
+                    <h2 style="font-size: 35px; margin-bottom: 4px"> <%= data.bookResults.title %> </h2>
+                    <p style="font-size: 20px;"> <%= data.bookResults.authorName %> </p>
+                </div>
+                <div class="ml-auto">
+                    <button style="margin-bottom: 70px; margin-left: 40px;" id="favorite-button" type="button"
+                        class="btn btn-success btn-lg"> Like </button>
+                </div>
             </div>
 
-            <!-- JS script to send data as POST request -->
+            <!-- js script -->
             <script>
                 const favoriteBtn = document.getElementById('favorite-button');
             
@@ -58,8 +67,8 @@
             
 
             <p style="font-size: 15px; font-weight: 250; margin-right: 5px; margin-bottom: 4px;"> Rating: </p>
-            <p style="font-size: 20px; font-weight: 400; display: inline;"> INSERT-LATER/5 </p>
-            <p style="font-size: 15px; font-weight: 400; display: inline; margin-left: 20px; "> INSERT-LATER ratings </p>
+            <p style="font-size: 18px; font-weight: 400; display: inline;"> <%= data.bookResults.rating %>/5 </p>
+            <p style="font-size: 18px; font-weight: 400; display: inline; margin-left: 20px; "> <%= data.bookResults.numRatings %> ratings </p>
             
             <p style="margin-top: 50px; font-size: 15px; font-weight: 250; margin-right: 5px; margin-bottom: 4px;"> Description: </p>
             <p style="font-size: 15px;"> <%= data.bookResults.description %> </p>
