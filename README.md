@@ -2,12 +2,15 @@
 By Jaywoo Jo, Ruhana Azam, John Shen, Alan Zhang
 
 ### Demo Video
-[Demo Video]()
+[Demo Video](https://www.youtube.com/watch?v=WaINe_qyNMA&ab_channel=JayJo)
+
+### App Info
+Built with Node.js, Express, JS/JQuery. Using a MySQL database hosted on Google Cloud Platform (GCP). CSS/HTML/Bootstrap for front-end. 
 
 ### How to run the application
-To run server, (1) add a .env file with our GCP DB_HOST, DB_NAME, DB_USER, and DB_PASS. (2) npm install (3) npx nodemon server.js (4) open http://localhost:8080/ in browser
+To run the server, (1) add a .env file with our GCP DB_HOST, DB_NAME, DB_USER, and DB_PASS. (2) npm install (3) npx nodemon server.js (4) open http://localhost:8080/ in browser
 
-Our server currently is running locally because it is easier to work on due to GCP VM SSH lagging issues. For Stage 5 it will be hosted on GCP.
+Our server currently is running locally because it is easier to work on due to GCP VM SSH lagging issues. For Stage 5 it will also be cloned to be hosted on GCP.
 
 ### Stages Info
 Stages: <br>
