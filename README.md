@@ -16,6 +16,20 @@ other students who have the same tastes in books as them. If a user wishes to co
 the student will be provided with the other person’s contact information so they can get
 connected and possibly form a book community.
 
+<table>
+  <tr>
+    <td> Home Page</td>
+     <td> Ex. search, STAT 400 p.1 </td>
+     <td> Ex. search, STAT 400 p.2</td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="Images/Sign Up.png"></td>
+    <td valign="top"><img src="https://github.com/CS222-UIUC/course-project-group-negative-4/blob/main/README-Images/2.png"></td>
+    <td valign="top"><img src="https://github.com/CS222-UIUC/course-project-group-negative-4/blob/main/README-Images/3.png"></td>
+  </tr>
+ </table>
+
+
 ### Usefulness
 This application draws its inspiration from Goodreads, a social website which allows individuals to
 search its database of books, annotations, quotes, and reviews from other readers.
