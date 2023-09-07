@@ -63,7 +63,7 @@ Built with Node.js, Express, JS/JQuery. Using a MySQL database hosted on Google 
 
 Built off of a developed ER diagram. Performed index analysis and incorperated stored procedures and triggers.
     <tr>
-        <td valign="top"><img src="Images/ERDiagram.png" style="width:50%;"></td>
+        <td valign="top"><img src="Images/ERDiagram.png" style="width:80%;"></td>
     </tr>
 
 ### How to run the application
